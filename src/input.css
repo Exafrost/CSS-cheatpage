@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .button-main-page {
+        @apply bg-cyan-500 hover:bg-cyan-600 rounded-3xl p-3 text-white font-bold text-lg;
+    }
+    .pf { /*page format*/
+        @apply ml-20 mr-20;
+    }
+}
+
+@font-face {
+    font-family: 'lucon';
+    src: url(./lucon.ttf) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
