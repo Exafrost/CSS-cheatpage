@@ -11,16 +11,40 @@
 <body class="text-lg">
     <nav class="bg-slate-300 flex justify-center p-5 mb-10">
         <a href="/src/index.html">
-            <h1 class="text-3xl font-bold border-slate-300 hover:border-gray-400 border-2 hover:border-solid rounded-full p-2">CSS CheatPage</h1>
+            <h1
+                class="text-3xl font-bold border-slate-300 hover:border-gray-400 border-2 hover:border-solid rounded-full p-2">
+                CSS CheatPage</h1>
         </a>
     </nav>
 
+    <div class="flex justify-center m-4" id="element_to_display"></div>
+
     <div class="ml-10 mr-10 flex">
-        <div class="bg-neutral-200 font-lucon flex-1 w-0.5 m-1">this a chipset of code</div>
-        <div class="bg-neutral-200 font-lucon flex-1 w-0.5 m-1">this a chipset of code</div>
+        <div class="bg-slate-700 text-white font-lucon text-sm rounded-md p-1 flex-1 w-0.5 m-1">
+            <div>page.html</div>
+            <div>
+                <div class="flex-wrap overflow-auto border-t-4 min-h-80 border-slate-500" id="html_content"></div>
+            </div>
+        </div>
+        <div class="bg-slate-700 text-white font-lucon text-sm rounded-md p-1 flex-1 w-0.5 m-1">
+            <div class="border-b-4 border-slate-500 p">tailwind.config.js</div>
+            <div id="config_content"></div>
+        </div>
     </div>
 
     </div>
 </body>
+
+<script>
+    // Retrieve the data from localStorage
+    const text = localStorage.getItem("element_to_display");
+    const text_html = localStorage.getItem("html_content");
+    const text_config = localStorage.getItem("config_content");
+
+    // Display the data
+    document.getElementById("element_to_display").innerHTML = text;
+    document.getElementById("html_content").innerHTML = text_html;
+    document.getElementById("config_content").innerHTML = text_config;
+</script>
 
 </html>

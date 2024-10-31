@@ -1,0 +1,13 @@
+{
+    "html":"<button class=\"hover:bg-cyan-600 hover:animate-wiggle bg-cyan-400 text-white font-bold rounded-full p-3 ml-2\">Button</button>",
+    "config": {
+        "theme" :{
+            "extend" : {
+                "keyframes": "/twiggle: {/n/t'0%, 100%': { transform: 'rotate(-3deg)' },/n'50%': { transform: 'rotate(3deg)' },/b},/b",
+                "animation": "/twiggle: 'wiggle 1s ease-in-out infinite',/n"
+                }
+            }
+
+        },
+    "display_element":"<button class=\"hover:bg-cyan-600 hover:animate-wiggle bg-cyan-400 text-white font-bold rounded-full p-3 ml-2\">Button</button>"
+}
