@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function display(ref) { //the ref does not depend on local/prod address
-    ref = absolute_path + ref;
+    ref = absolute_path() + ref;
     let json;
     try {
         const response = await fetch(ref);
@@ -77,7 +77,7 @@ function parseConfig(json){
                 while (q.size !=0) {
                     let current = q.dequeue();
                     if (current === "") {continue;}
-                    console.log(current);
+                    // console.log(current);
                     if (current == "/n") {
                         final_text += "<br>"
                     }
@@ -131,7 +131,7 @@ function parseConfig(json){
                 while (q.size !=0) {
                     let current = q.dequeue();
                     if (current === "") {continue;}
-                    console.log(current);
+                    // console.log(current);
                     if (current == "/n") {
                         final_text += "<br>"
                     }
