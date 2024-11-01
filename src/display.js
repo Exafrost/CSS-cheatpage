@@ -1,5 +1,10 @@
-async function display(ref){
-    
+import { valid_domain } from "./github.js";
+
+document.addEventListener("DOMContentLoaded", () => {
+    window.display = display;  // Assign `display` to `window` after DOM loads
+});
+
+async function display(ref) {
     let json;
     try {
         const response = await fetch(ref);
@@ -11,7 +16,7 @@ async function display(ref){
         console.error('There was a problem with the fetch operation:', error);
     }
 
-    //Set the element to display in display.html
+    // Set the element to display in display.html
     if (json) {
         localStorage.setItem("element_to_display", json.display_element);
         let text = parseHTML(json.html);
@@ -20,8 +25,13 @@ async function display(ref){
         localStorage.setItem("config_content", text_json);
     }
 
-    window.location.assign("/src/display.html")
+    console.log(valid_domain()); // Call `valid_domain` from `github.js`
+
+    // Use new URL method to create a URL to navigate
+    const new_url = new URL("src/display.html", valid_domain());
+    window.location.assign(new_url);
 }
+
 
 function parseConfig(json){
     //json is of shape " theme :{ extend : { [data] } ,} "
