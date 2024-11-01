@@ -1,10 +1,11 @@
-import { valid_domain } from "./github.js";
+import { valid_domain, absolute_path } from "./github.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     window.display = display;  // Assign `display` to `window` after DOM loads
 });
 
-async function display(ref) {
+async function display(ref) { //the ref does not depend on local/prod address
+    ref = absolute_path + ref;
     let json;
     try {
         const response = await fetch(ref);
