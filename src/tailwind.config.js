@@ -26,7 +26,11 @@ module.exports = {
         wiggle: 'wiggle 1s ease-in-out infinite',
         wiggleHard: 'wiggleHard 1s ease-in-out infinite',
         wiggleVeryHard: 'wiggleVeryHard 1s ease-in-out infinite',
-    }
+    },
+      transitionProperty: {
+        'flexColor': 'flex, color, background-color',
+        'flexColorTransf' : 'flex, color, background-color, transform',
+      }
   },
   },
   plugins: [],

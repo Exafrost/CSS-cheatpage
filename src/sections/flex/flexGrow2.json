@@ -1,0 +1,12 @@
+{
+    "html":"<div class=\"flex\"><button class=\"transition-flexColorTransf ease-in-out delay-250 hover:scale-y-125 hover:flex-[12_12] hover:bg-indigo-500 duration-500 flex-[10_10] bg-slate-200 h-40\">a</button><button class=\"transition-flexColorTransf ease-in-out delay-250 hover:scale-y-125 hover:flex-[12_12] hover:bg-indigo-500 duration-500 flex-[10_10] bg-slate-300 h-40\">b</button><button class=\"transition-flexColorTransf ease-in-out delay-250 hover:scale-y-125 hover:flex-[12_12] hover:bg-indigo-500 duration-500 flex-[10_10] bg-slate-400 h-40\">c</button><button class=\"transition-flexColorTransf ease-in-out delay-250 hover:scale-y-125 hover:flex-[12_12] hover:bg-indigo-500 duration-500 flex-[10_10] bg-slate-500 h-40\">d</button></div>",
+    "config": {
+        "theme" :{
+            "extend" : {
+                "transitionProperty": "'flexColorTransf': 'flex, color, background-color, transform',/n"
+                }
+            }
+
+        },
+    "display_element":"<div class=\"flex\"><button class=\"transition-flexColorTransf ease-in-out delay-250 hover:scale-y-125 hover:flex-[12_12] hover:bg-indigo-500 duration-500 flex-[10_10] bg-slate-200 h-40\">a</button><button class=\"transition-flexColorTransf ease-in-out delay-250 hover:scale-y-125 hover:flex-[12_12] hover:bg-indigo-500 duration-500 flex-[10_10] bg-slate-300 h-40\">b</button><button class=\"transition-flexColorTransf ease-in-out delay-250 hover:scale-y-125 hover:flex-[12_12] hover:bg-indigo-500 duration-500 flex-[10_10] bg-slate-400 h-40\">c</button><button class=\"transition-flexColorTransf ease-in-out delay-250 hover:scale-y-125 hover:flex-[12_12] hover:bg-indigo-500 duration-500 flex-[10_10] bg-slate-500 h-40\">d</button></div>"
+}

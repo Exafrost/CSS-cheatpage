@@ -42,7 +42,7 @@ function parseConfig(json){
 
     const q = new Queue;
 
-    let final_text = "<span><span class=\"text-red-400\">module.exports</span> = { <br>";
+    let final_text = "<span><span class=\"text-red-400\">module.exports</span> = {<br>";
     if (json.theme) { //if theme exists
         indent++;
         indent_text += indent_text_increment;
@@ -58,47 +58,7 @@ function parseConfig(json){
                 indent_text += indent_text_increment;
                 final_text += indent_text + "<span class=\"text-red-400\">keyframes</span> : {<br>"
 
-                let previous = "";
-                let text = "";
-                for (const el of json.theme.extend.keyframes){
-                    if (previous == "/"){
-                        q.enqueue(text);
-                        q.enqueue(previous + el);
-                        previous = ""
-                        text = "";
-                    }
-                    else {
-                        text += previous;
-                        previous = el;
-                    }
-                }
-                q.enqueue(text);
-
-                while (q.size !=0) {
-                    let current = q.dequeue();
-                    if (current === "") {continue;}
-                    // console.log(current);
-                    if (current == "/n") {
-                        final_text += "<br>"
-                    }
-                    else if (current == "/t") {
-                        indent++;
-                        indent_text += indent_text_increment;
-                    }
-                    else if (current == "/b") {
-                        indent--;
-                        indent_text = ""
-                        for (let i=0;i<indent;i++){
-                            indent_text += indent_text_increment;
-                        }
-                        final_text += "<br>"
-                    }
-                    else {
-                        final_text += indent_text + current;
-                    }
-                    
-                }
-
+                final_text += parseToText(json.theme.extend.keyframes, indent, indent_text, indent_text_increment);
 
                 final_text += indent_text + "},<br>"
                 indent--;
@@ -112,46 +72,7 @@ function parseConfig(json){
                 indent_text += indent_text_increment;
                 final_text += indent_text + "<span class=\"text-red-400\">animation</span> : {<br>"
 
-                let previous = "";
-                let text = "";
-                for (const el of json.theme.extend.animation){
-                    if (previous == "/"){
-                        q.enqueue(text);
-                        q.enqueue(previous + el);
-                        previous = ""
-                        text = "";
-                    }
-                    else {
-                        text += previous;
-                        previous = el;
-                    }
-                }
-                q.enqueue(text);
-
-                while (q.size !=0) {
-                    let current = q.dequeue();
-                    if (current === "") {continue;}
-                    // console.log(current);
-                    if (current == "/n") {
-                        final_text += "<br>"
-                    }
-                    else if (current == "/t") {
-                        indent++;
-                        indent_text += indent_text_increment;
-                    }
-                    else if (current == "/b") {
-                        indent--;
-                        indent_text = ""
-                        for (let i=0;i<indent;i++){
-                            indent_text += indent_text_increment;
-                        }
-                        final_text += "<br>"
-                    }
-                    else {
-                        final_text += indent_text + current;
-                    }
-                    
-                }
+                final_text += parseToText(json.theme.extend.animation, indent, indent_text, indent_text_increment);
 
                 final_text += indent_text + "},<br>"
                 indent--;
@@ -160,6 +81,21 @@ function parseConfig(json){
                     indent_text += indent_text_increment;
                 }
             }
+            if (json.theme.extend.transitionProperty){
+                indent++;
+                indent_text += indent_text_increment;
+                final_text += indent_text + "<span class=\"text-red-400\">transitionProperty</span> : {<br>"
+
+                final_text += parseToText(json.theme.extend.transitionProperty, indent, indent_text, indent_text_increment);
+
+                final_text += indent_text + "},<br>"
+                indent--;
+                indent_text = "";
+                for (let i=0;i<indent;i++){
+                    indent_text += indent_text_increment;
+                }
+            }
+            
 
             final_text += indent_text + "},<br>"
             indent--;
@@ -178,6 +114,51 @@ function parseConfig(json){
     return final_text;
 }
 
+function parseToText(input_text, indent, indent_text, indent_text_increment){
+    const q = new Queue;
+    let previous = "";
+    let text = "";
+    let final_text = "";
+    for (const el of input_text){
+        if (previous == "/"){
+            q.enqueue(text);
+            q.enqueue(previous + el);
+            previous = ""
+            text = "";
+        }
+        else {
+            text += previous;
+            previous = el;
+        }
+    }
+    q.enqueue(text);
+
+    while (q.size !=0) {
+        let current = q.dequeue();
+        if (current === "") {continue;}
+        // console.log(current);
+        if (current == "/n") {
+            final_text += "<br>"
+        }
+        else if (current == "/t") {
+            indent++;
+            indent_text += indent_text_increment;
+        }
+        else if (current == "/b") {
+            indent--;
+            indent_text = ""
+            for (let i=0;i<indent;i++){
+                indent_text += indent_text_increment;
+            }
+            final_text += "<br>"
+        }
+        else {
+            final_text += indent_text + current;
+        }
+        
+    }
+    return final_text;
+}
 
 function parseHTML(text){
     const q = new Queue;
@@ -202,7 +183,7 @@ function parseHTML(text){
     let inside_quote = false;
     let final_text = "";
     let text_to_add = "";
-    let indent = 1; // nb of indentations, is set to 1 for first encounter of "<"
+    let indent = 0; // nb of indentations
     let indent_text = "";
     let indent_text_increment = "&nbsp;&nbsp;&nbsp;";
     while (q.size != 0) {
@@ -210,46 +191,49 @@ function parseHTML(text){
         if (current === "") {continue;} //skip the loop if the current value is empty
         if (current == "<") { //inside the definition of a key word
             inside_key_word = KEYWORD;
-            text_to_add = "<br><span><";
-            indent--;
-            indent_text = "";
-            for (let i=0;i<indent;i++){
-                indent_text += indent_text_increment;
-            }
-            final_text += text_to_add;
             continue;
         } 
         else if (current == ">") { //end of the definition of a key word
             inside_key_word = NO;
-            text_to_add = "></span><br>";
-            indent++;
-            indent_text += indent_text_increment;
-            //exit the loop to avoid indent for >
-            final_text += text_to_add;
             continue;
         }
         else if (current == "\"") {//beginning or end of a class=""
-            if (inside_quote) {text_to_add = "\"</span>";}
+            if (inside_quote) {
+                text_to_add = "\"</span>></span><br>";
+                indent++;
+                indent_text += indent_text_increment;
+            }
             else {text_to_add = "<span class=\"text-green-400\">\"";}
             inside_quote = !inside_quote;
         } 
         else { //generic case
             switch (inside_key_word){
                 case KEYWORD:
-                    text_to_add = "<span class=\"text-red-400\">" + current + "</span>";
-                    inside_key_word = REST;
+                    if (current === "/div" || current === "/button" || current === "/span" ) {
+                        indent--;
+                        indent_text = "";
+                        for (let i=0;i<indent;i++){
+                            indent_text += indent_text_increment;
+                        }
+                        inside_key_word = NO;
+                        text_to_add ="<br>" + indent_text + "<span><<span class=\"text-red-400\">" + current + "</span>></span>";
+                    }
+                    else {
+                        text_to_add ="<br>" + indent_text + "<span><<span class=\"text-red-400\">" + current + "</span>";
+                        inside_key_word = REST;
+                    }
                     break;
                 case REST:
                     text_to_add = "<span> " + current + "</span>";
                     break;
 
                 default:
-                    text_to_add = "<span>" + current + " </span>";
+                    text_to_add = indent_text + "<span>" + current + " </span>";
                     break;
             }
         } 
 
-        final_text += indent_text + text_to_add;
+        final_text += text_to_add;
     }
     return final_text;
 }
