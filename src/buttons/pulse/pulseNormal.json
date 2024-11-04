@@ -1,5 +1,5 @@
 {
-    "html":"<button class= \"hover:bg-cyan-600 hover:animate-pulse bg-cyan-400 text-white font-bold rounded-full p-3 ml-2\">Button</button>",
+    "html":"<button class= \"hover:bg-cyan-600 hover:animate-pulse bg-cyan-400 text-white font-bold rounded-full p-3 pl-7 pr-7 ml-2\">Button</button>",
     "config": {},
-    "display_element":"<div class=\"flex justify-center\"><button class= \"hover:bg-cyan-600 hover:animate-pulse bg-cyan-400 text-white font-bold rounded-full p-3 ml-2\">Button</button></div>"
+    "display_element":"<div class=\"flex justify-center\"><button class= \"hover:bg-cyan-600 hover:animate-pulse bg-cyan-400 text-white font-bold rounded-full p-3 pl-7 pr-7 ml-2\">Button</button></div>"
 }
